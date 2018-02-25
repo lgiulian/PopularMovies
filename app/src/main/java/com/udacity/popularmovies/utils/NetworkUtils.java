@@ -35,20 +35,20 @@ import java.util.Scanner;
 public class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    public final static String TMDB_API_BASE_URL = "http://api.themoviedb.org/3";
+    private final static String TMDB_API_BASE_URL = "http://api.themoviedb.org/3";
     public final static String TMDB_API_MOVIE_POPULAR_URL = TMDB_API_BASE_URL + "/movie/popular";
     public final static String TMDB_API_MOVIE_TOP_RATED_URL = TMDB_API_BASE_URL + "/movie/top_rated";
     public final static String TMDB_API_MOVIE_DISCOVER_URL = TMDB_API_BASE_URL + "/discover/movie";
-    public final static String LANGUAGE_PARAM = "language";
-    public final static String language = "en-US";
-    public final static String PAGE_PARAM = "page";
-    public final static int page = 1;
+    private final static String LANGUAGE_PARAM = "language";
+    private final static String language = "en-US";
+    private final static String PAGE_PARAM = "page";
+    private final static int page = 1;
 
-    public final static String TMDB_POSTER_BASE_URL = "http://image.tmdb.org/t/p";
-    public final static String TMDB_POSTER_SIZE = "/w185"; // "w92", "w154", "w185", "w342", "w500", "w780", or "original"
+    private final static String TMDB_POSTER_BASE_URL = "http://image.tmdb.org/t/p";
+    private final static String TMDB_POSTER_SIZE = "/w185"; // "w92", "w154", "w185", "w342", "w500", "w780", or "original"
     public final static String TMDB_POSTER_URL = TMDB_POSTER_BASE_URL + TMDB_POSTER_SIZE;
 
-    public final static String API_KEY = "HERE_SHOULD_BE_YOUR_TMDB_API_KEY";
+    private final static String API_KEY = "HERE_SHOULD_BE_YOUR_TMDB_API_KEY";
 
     /**
      * Builds the URL used to communicate with TMDB using the specified endpoint

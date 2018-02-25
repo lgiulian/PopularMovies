@@ -20,7 +20,7 @@ public class Movie implements Parcelable {
     public Movie() {
     }
 
-    public Movie(Parcel in) {
+    private Movie(Parcel in) {
         id = in.readInt();
         voteAverage = in.readDouble();
         title = in.readString();

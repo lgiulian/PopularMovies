@@ -17,7 +17,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
 
-    private DateFormat dateFormat_ddMMMMYYYY = new SimpleDateFormat("dd MMMM YYYY");
+    private final DateFormat dateFormat_ddMMMMYYYY = new SimpleDateFormat("dd MMMM YYYY");
 
     private Movie mMovie;
     private ImageView mPosterImgView;
@@ -32,9 +32,11 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         Bundle extras = getIntent().getExtras();
-        if (extras.containsKey(MainActivity.MOVIE_EXTRA_KEY)) {
+        if (extras != null && extras.containsKey(MainActivity.MOVIE_EXTRA_KEY)) {
             mMovie = extras.getParcelable(MainActivity.MOVIE_EXTRA_KEY);
-            Log.d(TAG, mMovie.toString());
+            if (mMovie != null) {
+                Log.d(TAG, mMovie.toString());
+            }
         }
 
         mPosterImgView = findViewById(R.id.iv_poster);

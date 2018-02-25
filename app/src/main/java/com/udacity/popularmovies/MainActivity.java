@@ -27,7 +27,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MoviesAdapter.MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<List<Movie>> {
 
     private static final int RECYCLERVIEW_SPANCOUNT = 2;
-    public static final int MOVIES_LOADER_ID = 1;
+    private static final int MOVIES_LOADER_ID = 1;
     public static final String MOVIE_EXTRA_KEY = "MOVIE_EXTRA_KEY";
 
     private RecyclerView mMoviesView;
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
                 List<Movie> movies = null;
 
                 try {
-                    String url = null;
+                    String url;
                     if (mCurrentOrder == Order.MOST_POPULAR) {
                         url = NetworkUtils.TMDB_API_MOVIE_POPULAR_URL;
                     } else if (mCurrentOrder == Order.HIGHEST_RATED) {

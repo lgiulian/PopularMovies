@@ -38,7 +38,7 @@ public class TmDbJsonUtils {
 
     /**
      * Parse movies from json
-     * @param json
+     * @param json the json content
      * @return the list of movies parsed from json
      */
     public static List<Movie> getMoviesFromJsonResponse(String json) {
