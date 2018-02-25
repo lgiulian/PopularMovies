@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">PopularMovies</string>
+    <string name="error_message">An error has occurred. Please try again later.</string>
+    <string name="show_most_popular_menu_label">Most popular</string>
+    <string name="highest_rated_menu_label">Highest rated</string>
+
+    <string name="details_label">Movie Details</string>
+    <string name="no_internet_connection_message">You don\'t have an internet connection.</string>
 </resources>
