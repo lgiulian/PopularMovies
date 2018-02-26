@@ -21,6 +21,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
+import com.udacity.popularmovies.BuildConfig;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -48,7 +50,7 @@ public class NetworkUtils {
     private final static String TMDB_POSTER_SIZE = "/w185"; // "w92", "w154", "w185", "w342", "w500", "w780", or "original"
     public final static String TMDB_POSTER_URL = TMDB_POSTER_BASE_URL + TMDB_POSTER_SIZE;
 
-    private final static String API_KEY = "HERE_SHOULD_BE_YOUR_TMDB_API_KEY";
+    private final static String API_KEY = BuildConfig.API_KEY;
 
     /**
      * Builds the URL used to communicate with TMDB using the specified endpoint
