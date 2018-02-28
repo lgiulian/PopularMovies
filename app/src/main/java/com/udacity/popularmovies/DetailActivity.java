@@ -1,12 +1,16 @@
 package com.udacity.popularmovies;
 
+import android.databinding.DataBindingUtil;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.udacity.popularmovies.databinding.ActivityDetailBinding;
 import com.udacity.popularmovies.model.Movie;
 import com.udacity.popularmovies.utils.NetworkUtils;
 
@@ -19,17 +23,16 @@ public class DetailActivity extends AppCompatActivity {
 
     private final DateFormat dateFormat_ddMMMMYYYY = new SimpleDateFormat("dd MMMM YYYY");
 
+    private ActivityDetailBinding mBinding;
     private Movie mMovie;
-    private ImageView mPosterImgView;
-    private TextView mTitle;
-    private TextView mReleaseDate;
-    private TextView mVoteAverage;
-    private TextView mPlotSynopsis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
         setContentView(R.layout.activity_detail);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null && extras.containsKey(MainActivity.MOVIE_EXTRA_KEY)) {
@@ -39,12 +42,18 @@ public class DetailActivity extends AppCompatActivity {
             }
         }
 
-        mPosterImgView = findViewById(R.id.iv_poster);
-        mTitle = findViewById(R.id.tv_movie_title);
-        mReleaseDate = findViewById(R.id.tv_release_date);
-        mVoteAverage = findViewById(R.id.tv_vote_average);
-        mPlotSynopsis = findViewById(R.id.tv_plot_synopsis);
         populateUi();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void populateUi() {
@@ -52,11 +61,11 @@ public class DetailActivity extends AppCompatActivity {
             String posterUrl = NetworkUtils.TMDB_POSTER_URL + mMovie.getPosterPath();
             Picasso.with(this)
                     .load(posterUrl)
-                    .into(mPosterImgView);
-            mTitle.setText(mMovie.getTitle());
-            mReleaseDate.setText(dateFormat_ddMMMMYYYY.format(mMovie.getReleaseDate()));
-            mVoteAverage.setText(String.valueOf(mMovie.getVoteAverage()));
-            mPlotSynopsis.setText(mMovie.getOverview());
+                    .into(mBinding.ivPoster);
+            mBinding.tvMovieTitle.setText(mMovie.getTitle());
+            mBinding.tvReleaseDate.setText(dateFormat_ddMMMMYYYY.format(mMovie.getReleaseDate()));
+            mBinding.tvVoteAverage.setText(String.valueOf(mMovie.getVoteAverage()));
+            mBinding.tvPlotSynopsis.setText(mMovie.getOverview());
         }
     }
 }
