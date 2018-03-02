@@ -38,9 +38,12 @@ public class NetworkUtils {
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
     private final static String TMDB_API_BASE_URL = "http://api.themoviedb.org/3";
-    public final static String TMDB_API_MOVIE_POPULAR_URL = TMDB_API_BASE_URL + "/movie/popular";
-    public final static String TMDB_API_MOVIE_TOP_RATED_URL = TMDB_API_BASE_URL + "/movie/top_rated";
+    private final static String TMDB_API_MOVIE_URL = TMDB_API_BASE_URL + "/movie";
+    public final static String TMDB_API_MOVIE_POPULAR_URL = TMDB_API_MOVIE_URL + "/popular";
+    public final static String TMDB_API_MOVIE_TOP_RATED_URL = TMDB_API_MOVIE_URL + "/top_rated";
     public final static String TMDB_API_MOVIE_DISCOVER_URL = TMDB_API_BASE_URL + "/discover/movie";
+    public final static String TMDB_API_MOVIE_VIDEOS_PATH = "/videos";
+    public final static String TMDB_API_MOVIE_REVIEWS_PATH = "/reviews";
     private final static String LANGUAGE_PARAM = "language";
     private final static String language = "en-US";
     private final static String PAGE_PARAM = "page";
@@ -60,6 +63,40 @@ public class NetworkUtils {
                 .appendQueryParameter("api_key", API_KEY)
                 .appendQueryParameter(LANGUAGE_PARAM, language)
                 .appendQueryParameter(PAGE_PARAM, Integer.toString(page))
+                .build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Log.v(TAG, "built url: " + url);
+        return url;
+    }
+
+    public static URL buildTrailersUrl(int movieId) {
+        Uri builtUri = Uri.parse(TMDB_API_MOVIE_URL).buildUpon()
+                .appendPath(String.valueOf(movieId))
+                .appendPath(TMDB_API_MOVIE_VIDEOS_PATH)
+                .appendQueryParameter("api_key", API_KEY)
+                .appendQueryParameter(LANGUAGE_PARAM, language)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Log.v(TAG, "built url: " + url);
+        return url;
+    }
+
+    public static URL buildReviewsUrl(int movieId) {
+        Uri builtUri = Uri.parse(TMDB_API_MOVIE_URL).buildUpon()
+                .appendPath(String.valueOf(movieId))
+                .appendPath(TMDB_API_MOVIE_REVIEWS_PATH)
+                .appendQueryParameter("api_key", API_KEY)
+                .appendQueryParameter(LANGUAGE_PARAM, language)
                 .build();
         URL url = null;
         try {
