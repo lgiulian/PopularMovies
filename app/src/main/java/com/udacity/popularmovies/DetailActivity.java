@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
@@ -89,7 +88,7 @@ public class DetailActivity extends AppCompatActivity implements TrailersAdapter
         );
         mBinding.rvTrailers.addItemDecoration(dividerItemDecoration);
 
-        mTrailersAdapter = new TrailersAdapter(this, this);
+        mTrailersAdapter = new TrailersAdapter(this);
         mBinding.rvTrailers.setAdapter(mTrailersAdapter);
 
         getSupportLoaderManager().initLoader(TRAILERS_LOADER_ID, null, this);
@@ -104,7 +103,7 @@ public class DetailActivity extends AppCompatActivity implements TrailersAdapter
         );
         mBinding.rvReviews.addItemDecoration(dividerItemDecoration);
 
-        mReviewsAdapter = new ReviewsAdapter(this);
+        mReviewsAdapter = new ReviewsAdapter();
         mBinding.rvReviews.setAdapter(mReviewsAdapter);
 
         getSupportLoaderManager().initLoader(REVIEWS_LOADER_ID, null, this);
@@ -226,7 +225,7 @@ public class DetailActivity extends AppCompatActivity implements TrailersAdapter
         openWebPage(trailerUrl);
     }
 
-    public void openWebPage(String url) {
+    private void openWebPage(String url) {
         Uri webpage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
         if (intent.resolveActivity(getPackageManager()) != null) {

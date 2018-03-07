@@ -43,8 +43,8 @@ public class NetworkUtils {
     public final static String TMDB_API_MOVIE_POPULAR_URL = TMDB_API_MOVIE_URL + "/popular";
     public final static String TMDB_API_MOVIE_TOP_RATED_URL = TMDB_API_MOVIE_URL + "/top_rated";
     public final static String TMDB_API_MOVIE_DISCOVER_URL = TMDB_API_BASE_URL + "/discover/movie";
-    public final static String TMDB_API_MOVIE_VIDEOS_PATH = "videos";
-    public final static String TMDB_API_MOVIE_REVIEWS_PATH = "reviews";
+    private final static String TMDB_API_MOVIE_VIDEOS_PATH = "videos";
+    private final static String TMDB_API_MOVIE_REVIEWS_PATH = "reviews";
     private final static String LANGUAGE_PARAM = "language";
     private final static String language = "en-US";
     private final static String PAGE_PARAM = "page";
@@ -53,7 +53,7 @@ public class NetworkUtils {
     private final static String TMDB_POSTER_BASE_URL = "http://image.tmdb.org/t/p";
     private final static String TMDB_POSTER_SIZE = "/w185"; // "w92", "w154", "w185", "w342", "w500", "w780", or "original"
     public final static String TMDB_POSTER_URL = TMDB_POSTER_BASE_URL + TMDB_POSTER_SIZE;
-    public final static String YOUTUBE_URL = "https://www.youtube.com/watch?v=";
+    private final static String YOUTUBE_URL = "https://www.youtube.com/watch?v=";
 
     private final static String API_KEY = BuildConfig.API_KEY;
 

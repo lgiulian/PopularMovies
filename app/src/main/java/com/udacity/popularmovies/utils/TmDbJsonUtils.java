@@ -116,13 +116,11 @@ public class TmDbJsonUtils {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
         return trailers;
     }
 
-    private static Trailer getTrailerFromJsonObject(JSONObject trailerJsonObject) throws ParseException {
+    private static Trailer getTrailerFromJsonObject(JSONObject trailerJsonObject) {
 //        {
 //            "id": "5a96a6b6c3a36859f70092fd",
 //                "iso_639_1": "en",
@@ -161,13 +159,11 @@ public class TmDbJsonUtils {
 
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
         return reviews;
     }
 
-    private static Review getReviewFromJsonObject(JSONObject reviewJsonObject) throws ParseException {
+    private static Review getReviewFromJsonObject(JSONObject reviewJsonObject) {
 //    {
 //        "id": "5a73f1a6925141059a016d77",
 //            "author": "Gimly",

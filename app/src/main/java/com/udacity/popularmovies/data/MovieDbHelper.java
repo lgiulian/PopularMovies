@@ -9,9 +9,9 @@ import com.udacity.popularmovies.data.MovieContract.FavoriteEntry;
  * Created by iulian on 3/2/2018.
  */
 
-public class MovieDbHelper extends SQLiteOpenHelper {
+class MovieDbHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "movie.db";
+    private static final String DATABASE_NAME = "movie.db";
     private final static int DATABASE_VERSION = 1;
 
     public MovieDbHelper(Context context) {

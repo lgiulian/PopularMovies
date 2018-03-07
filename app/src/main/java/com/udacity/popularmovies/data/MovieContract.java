@@ -11,7 +11,7 @@ public class MovieContract {
 
     public static final String CONTENT_AUTHORITY = "com.udacity.popularmovies";
 
-    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_FAVORITE = "favorite";
 
@@ -30,19 +30,6 @@ public class MovieContract {
         public static final String COLUMN_VOTE_AVERAGE = "vote_average";
         public static final String COLUMN_POSTER_PATH = "poster_path";
         public static final String COLUMN_OVERVIEW = "overview";
-
-        /**
-         * Builds a URI that adds the ID to the end of the favorite movie content URI path.
-         * This is used to query details about a single favorite movie entry by id.
-         *
-         * @param id The favorite id
-         * @return Uri to query details about a single favorite entry
-         */
-        public static Uri buildFavoriteUriWithId(long id) {
-            return CONTENT_URI.buildUpon()
-                    .appendPath(Long.toString(id))
-                    .build();
-        }
 
     }
 }

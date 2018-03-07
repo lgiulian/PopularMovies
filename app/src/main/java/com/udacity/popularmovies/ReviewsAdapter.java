@@ -1,6 +1,5 @@
 package com.udacity.popularmovies;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +16,6 @@ import java.util.List;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewViewHolder> {
     private List<Review> mReviewsData;
-    private Context mContext;
-
-    public ReviewsAdapter(Context context) {
-        mContext = context;
-    }
 
     @Override
     public ReviewViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -47,7 +41,7 @@ public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ReviewVi
     }
 
     class ReviewViewHolder extends RecyclerView.ViewHolder {
-        public TextView mReviewContent;
+        public final TextView mReviewContent;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);

@@ -17,8 +17,8 @@ import android.text.TextUtils;
 
 public class MovieProvider extends ContentProvider {
 
-    public static final int CODE_FAVORITE = 100;
-    public static final int CODE_FAVORITE_WITH_ID = 101;
+    private static final int CODE_FAVORITE = 100;
+    private static final int CODE_FAVORITE_WITH_ID = 101;
 
     /*
      * The URI Matcher used by this content provider.
@@ -31,7 +31,7 @@ public class MovieProvider extends ContentProvider {
      *
      * @return A UriMatcher that correctly matches the code constants
      */
-    public static UriMatcher buildUriMatcher() {
+    private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = MovieContract.CONTENT_AUTHORITY;
@@ -53,7 +53,7 @@ public class MovieProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        Cursor cursor = null;
+        Cursor cursor;
         switch (sUriMatcher.match(uri)) {
             case CODE_FAVORITE:
                 cursor = mOpenHelper.getReadableDatabase().query(MovieContract.FavoriteEntry.TABLE_NAME,
@@ -91,7 +91,7 @@ public class MovieProvider extends ContentProvider {
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
-        Uri returnedUri = null;
+        Uri returnedUri;
         switch (sUriMatcher.match(uri)) {
             case CODE_FAVORITE:
                 long id = mOpenHelper.getWritableDatabase().insert(MovieContract.FavoriteEntry.TABLE_NAME, null, values);
@@ -110,7 +110,7 @@ public class MovieProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        int deletedRows = 0;
+        int deletedRows;
         if(TextUtils.isEmpty(selection)) {
             selection = "1";
         }

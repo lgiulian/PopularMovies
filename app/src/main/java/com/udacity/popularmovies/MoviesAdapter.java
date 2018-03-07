@@ -19,8 +19,8 @@ import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
     private List<Movie> mMoviesData;
-    private Context mContext;
-    private MovieAdapterOnClickHandler mClickHandler;
+    private final Context mContext;
+    private final MovieAdapterOnClickHandler mClickHandler;
 
     public interface MovieAdapterOnClickHandler {
         void onClick(Movie movie);
@@ -58,7 +58,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     }
 
     class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public ImageView mPosterImage;
+        public final ImageView mPosterImage;
 
         public MovieViewHolder(View itemView) {
             super(itemView);

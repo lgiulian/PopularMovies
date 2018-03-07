@@ -1,6 +1,5 @@
 package com.udacity.popularmovies;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.udacity.popularmovies.model.Trailer;
-import com.udacity.popularmovies.utils.NetworkUtils;
 
 import java.util.List;
 
@@ -18,15 +16,13 @@ import java.util.List;
 
 public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.TrailerViewHolder> {
     private List<Trailer> mTrailersData;
-    private Context mContext;
-    private TrailerAdapterOnClickHandler mClickHandler;
+    private final TrailerAdapterOnClickHandler mClickHandler;
 
     public interface TrailerAdapterOnClickHandler {
         void onClick(String trailerKey);
     }
 
-    public TrailersAdapter(Context context, TrailerAdapterOnClickHandler clickHandler) {
-        mContext = context;
+    public TrailersAdapter(TrailerAdapterOnClickHandler clickHandler) {
         mClickHandler = clickHandler;
     }
 
@@ -58,7 +54,7 @@ public class TrailersAdapter extends RecyclerView.Adapter<TrailersAdapter.Traile
     }
 
     class TrailerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView mTrailerName;
+        public final TextView mTrailerName;
 
         public TrailerViewHolder(View itemView) {
             super(itemView);
