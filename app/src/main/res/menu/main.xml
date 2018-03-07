@@ -11,4 +11,9 @@
         android:orderInCategory="1"
         android:title="@string/highest_rated_menu_label"
         app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/action_favorites"
+        android:orderInCategory="1"
+        android:title="@string/favorites_menu_label"
+        app:showAsAction="ifRoom" />
 </menu>

@@ -7,4 +7,11 @@
     <string name="details_label">Movie Details</string>
     <string name="no_internet_connection_message">You don\'t have an internet connection.</string>
     <string name="poster_image_description">The movie poster</string>
+    <string name="remove_from_favorites">Remove from\nfavorites</string>
+    <string name="mark_as_favorite">Mark as\nfavorite</string>
+    <string name="trailers_label">Trailers:</string>
+    <string name="trailer_play_description">Play trailer</string>
+    <string name="reviews_label">Reviews:</string>
+    <string name="favorites_menu_label">Favorites</string>
+    <string name="share_menu_label">Share</string>
 </resources>

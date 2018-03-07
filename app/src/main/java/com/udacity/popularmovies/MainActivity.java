@@ -1,6 +1,7 @@
 package com.udacity.popularmovies;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
@@ -17,11 +18,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.udacity.popularmovies.data.MovieContract;
 import com.udacity.popularmovies.model.Movie;
 import com.udacity.popularmovies.utils.NetworkUtils;
 import com.udacity.popularmovies.utils.TmDbJsonUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MoviesAdapter.MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<List<Movie>> {
@@ -35,9 +39,9 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
     private TextView mErrorMessageTv;
     private ProgressBar mLoadingIndicatorPb;
 
-    enum Order {MOST_POPULAR, HIGHEST_RATED}
+    enum DisplayOption {MOST_POPULAR, HIGHEST_RATED, FAVORITE}
 
-    private Order mCurrentOrder = Order.MOST_POPULAR;
+    private DisplayOption mCurrentDisplayOption = DisplayOption.MOST_POPULAR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,15 +77,36 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
 
                 try {
                     String url;
-                    if (mCurrentOrder == Order.MOST_POPULAR) {
-                        url = NetworkUtils.TMDB_API_MOVIE_POPULAR_URL;
-                    } else if (mCurrentOrder == Order.HIGHEST_RATED) {
-                        url = NetworkUtils.TMDB_API_MOVIE_TOP_RATED_URL;
-                    } else {
-                        url = NetworkUtils.TMDB_API_MOVIE_POPULAR_URL;
+                    switch (mCurrentDisplayOption) {
+                        case MOST_POPULAR:
+                            url = NetworkUtils.TMDB_API_MOVIE_POPULAR_URL;
+                            String jsonResponse = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.buildUrl(url));
+                            movies = TmDbJsonUtils.getMoviesFromJsonResponse(jsonResponse);
+                            break;
+                        case HIGHEST_RATED:
+                            url = NetworkUtils.TMDB_API_MOVIE_TOP_RATED_URL;
+                            jsonResponse = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.buildUrl(url));
+                            movies = TmDbJsonUtils.getMoviesFromJsonResponse(jsonResponse);
+                            break;
+                        case FAVORITE:
+                            Cursor cursor = getContentResolver().query(MovieContract.FavoriteEntry.CONTENT_URI,
+                                    null, null, null, null);
+                            if (cursor != null) {
+                                movies = new ArrayList<>();
+                                while (cursor.moveToNext()) {
+                                    int movieId = cursor.getInt(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_MOVIE_ID));
+                                    String title = cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_TITLE));
+                                    String overview = cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_OVERVIEW));
+                                    String posterPath = cursor.getString(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_POSTER_PATH));
+                                    double voteAverage = cursor.getDouble(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_VOTE_AVERAGE));
+                                    long releaseTime = cursor.getLong(cursor.getColumnIndex(MovieContract.FavoriteEntry.COLUMN_RELEASE_DATE));
+                                    Movie movie = new Movie(movieId, title, posterPath, overview, voteAverage, new Date(releaseTime));
+                                    movies.add(movie);
+                                }
+                                cursor.close();
+                            }
+                            break;
                     }
-                    String jsonResponse = NetworkUtils.getResponseFromHttpUrl(NetworkUtils.buildUrl(url));
-                    movies = TmDbJsonUtils.getMoviesFromJsonResponse(jsonResponse);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -90,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
 
             @Override
             protected void onStartLoading() {
-                if (NetworkUtils.isConnected(MainActivity.this)) {
+                if (NetworkUtils.isConnected(MainActivity.this) || mCurrentDisplayOption == DisplayOption.FAVORITE) {
                     if (mMovies != null) {
                         deliverResult(mMovies);
                     } else {
@@ -148,12 +173,17 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Mov
         int id = item.getItemId();
         switch (id) {
             case R.id.action_highest_rated:
-                mCurrentOrder = Order.HIGHEST_RATED;
+                mCurrentDisplayOption = DisplayOption.HIGHEST_RATED;
                 mMoviesAdapter.setMovieData(null);
                 getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
                 return true;
             case R.id.action_most_popular:
-                mCurrentOrder = Order.MOST_POPULAR;
+                mCurrentDisplayOption = DisplayOption.MOST_POPULAR;
+                mMoviesAdapter.setMovieData(null);
+                getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
+                return true;
+            case R.id.action_favorites:
+                mCurrentDisplayOption = DisplayOption.FAVORITE;
                 mMoviesAdapter.setMovieData(null);
                 getSupportLoaderManager().restartLoader(MOVIES_LOADER_ID, null, this);
                 return true;

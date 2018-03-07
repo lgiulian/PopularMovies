@@ -18,6 +18,8 @@ package com.udacity.popularmovies.utils;
 import android.util.Log;
 
 import com.udacity.popularmovies.model.Movie;
+import com.udacity.popularmovies.model.Review;
+import com.udacity.popularmovies.model.Trailer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -93,5 +95,92 @@ public class TmDbJsonUtils {
         Log.v(TAG, movie.toString());
 
         return movie;
+    }
+
+    /**
+     * Parse trailers from json
+     * @param json the json content
+     * @return the list of trailers parsed from json
+     */
+    public static List<Trailer> getTrailersFromJsonResponse(String json) {
+        List<Trailer> trailers = new ArrayList<>();
+        try {
+            JSONObject main = new JSONObject(json);
+            JSONArray trailersArray = main.getJSONArray("results");
+            if (trailersArray != null) {
+                for (int i = 0; i < trailersArray.length(); i++) {
+                    Trailer trailer = getTrailerFromJsonObject(trailersArray.getJSONObject(i));
+                    trailers.add(trailer);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return trailers;
+    }
+
+    private static Trailer getTrailerFromJsonObject(JSONObject trailerJsonObject) throws ParseException {
+//        {
+//            "id": "5a96a6b6c3a36859f70092fd",
+//                "iso_639_1": "en",
+//                "iso_3166_1": "US",
+//                "key": "Jit3YhGx5pU",
+//                "name": "Official Red Band Trailer",
+//                "site": "YouTube",
+//                "size": 1080,
+//                "type": "Trailer"
+//        },
+        Trailer trailer = new Trailer();
+        trailer.setId(trailerJsonObject.optString("id"));
+        trailer.setKey(trailerJsonObject.optString("key"));
+        trailer.setName(trailerJsonObject.optString("name"));
+
+        Log.v(TAG, trailer.toString());
+        return trailer;
+    }
+
+    /**
+     * Parse trailers from json
+     * @param json the json content
+     * @return the list of trailers parsed from json
+     */
+    public static List<Review> getReviewsFromJsonResponse(String json) {
+        List<Review> reviews = new ArrayList<>();
+        try {
+            JSONObject main = new JSONObject(json);
+            JSONArray reviewsArray = main.getJSONArray("results");
+            if (reviewsArray != null) {
+                for (int i = 0; i < reviewsArray.length(); i++) {
+                    Review trailer = getReviewFromJsonObject(reviewsArray.getJSONObject(i));
+                    reviews.add(trailer);
+                }
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return reviews;
+    }
+
+    private static Review getReviewFromJsonObject(JSONObject reviewJsonObject) throws ParseException {
+//    {
+//        "id": "5a73f1a6925141059a016d77",
+//            "author": "Gimly",
+//            "content": "Pretty damn funny given the incredibly grim subject matter, but that's not a shock when you take into consideration that _Three Billboards Outside Ebbing, Missouri_ is directed by Martin McDonagh, who once again comes away with a win, which makes him, in my opinion at least, three for three as a director.\r\n\r\n_Final rating:★★★½ - I really liked it. Would strongly recommend you give it your time._",
+//            "url": "https://www.themoviedb.org/review/5a73f1a6925141059a016d77"
+//    }
+        Review review = new Review();
+        review.setId(reviewJsonObject.optString("id"));
+        review.setAuthor(reviewJsonObject.optString("author"));
+        review.setContent(reviewJsonObject.optString("content"));
+        review.setUrl(reviewJsonObject.optString("url"));
+
+        Log.v(TAG, review.toString());
+        return review;
     }
 }
