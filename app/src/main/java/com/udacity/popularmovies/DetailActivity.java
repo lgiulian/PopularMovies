@@ -135,6 +135,8 @@ public class DetailActivity extends AppCompatActivity implements TrailersAdapter
             String posterUrl = NetworkUtils.TMDB_POSTER_URL + mMovie.getPosterPath();
             Picasso.with(this)
                     .load(posterUrl)
+                    .placeholder(R.drawable.ic_poster_placeholder)
+                    .error(R.drawable.ic_error)
                     .into(mBinding.ivPoster);
             mBinding.tvMovieTitle.setText(mMovie.getTitle());
             mBinding.tvReleaseDate.setText(dateFormat_ddMMMMYYYY.format(mMovie.getReleaseDate()));

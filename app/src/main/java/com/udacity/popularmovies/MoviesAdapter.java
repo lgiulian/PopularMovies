@@ -44,6 +44,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         String posterUrl = NetworkUtils.TMDB_POSTER_URL + movie.getPosterPath();
         Picasso.with(mContext)
                 .load(posterUrl)
+                .placeholder(R.drawable.ic_poster_placeholder)
+                .error(R.drawable.ic_error)
                 .into(holder.mPosterImage);
     }
 
